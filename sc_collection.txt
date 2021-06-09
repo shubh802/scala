@@ -1,0 +1,173 @@
+
+Collections
+-----------
+
+Range
+Ex
+1 to 100
+
+it is a sequence from 1 to 100
+
+val (even, odd) = (1 to 100).partition(_ % 2 == 0) // The data is divided onto two sets based on the condition from the partition
+
+partition returns the value based in the condition of true and false , _ means it takes one integer value
+
+In collection we have trait in here the top parent is Traversable
+Iterable // default behavior of foreach and also traversable 
+
+Collection Type
+ 
+Seq : IndexedSeq, LinearSeq
+Set: SortedSet, BitSet
+Map: SortedMap
+
+* parent of all them is Iterable whoose parent is Traversable
+
+Set,Seq has certain concrete classes
+
+The concrete classes of collection are immutable and mutable
+
+Mutable Collection
+
+Array
+it is directly available in scala.Array
+
+Immutable Collection
+
+List
+Vector
+
+Mutable collection : It has the update method eg Array
+Immutable Collection : It doesn't have update method, even if we take the var a eg List
+
+scala> val a = Array(1,2,3)
+a: Array[Int] = Array(1, 2, 3)
+
+scala> a.update(0,10) //first parameter is the position n second one is value
+
+scala> a
+res2: Array[Int] = Array(10, 2, 3)
+
+scala> a(2)= 15
+
+scala> a
+res4: Array[Int] = Array(10, 2, 15)
+
+scala> var a = Array(1, 2, 3)
+a: Array[Int] = Array(1, 2, 3)
+
+scala> a(2) = 15
+
+scala> a
+res6: Array[Int] = Array(1, 2, 15)
+
+scala> a = a :+ 20  	// To add the new element in the end
+a: Array[Int] = [I@3a4181ba
+
+scala> a
+res7: Array[Int] = Array(1, 2, 15, 20)
+
+
+SEQUENCE(Seq)
+--------------
+
+Trait hybrid of abstract n interface
+
+It is series of element wch has length n can be accessed
+
+Elements can be accessed by prefix
+
+no new need of usinf new as it case classes or apply method
+
+val l = List(1, 2, 3)
+val a = Array(1, 2, 3)
+
+List is like Linked List, immutable
+Array is like java array it is faster performance faster, mutable
+
+config classes ?
+buffer classes ?
+
+config classes are case class like List so no new() is req
+
+we can have different types in a List
+val l= List(1, 2.0)
+
+it will take Double for all as it is gerneric
+
+scala> val a = List(1, 2.0, "Hello")
+a: List[Any] = List(1, 2.0, Hello)
+
+scala> l :+ 5
+res3: List[Int] = List(1, 2, 3, 5)
+
+scala> 6 +: l  // for adding in the begining
+res5: List[Int] = List(6, 1, 2, 3)
+
+we are not updating the existing list as l is val
+
+// appending the existing element
+scala> var a  =List(1, 2, 3)
+a: List[Int] = List(1, 2, 3)
+
+scala> a = 4+: a
+
+scala>  val m = 100 to 110
+m: scala.collection.immutable.Range.Inclusive = Range 100 to 110
+
+scala> a = a ++ m
+a: List[Int] = List(4, 1, 2, 3, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110)
+
+Traversable as extract method as foreach wch can be implemented in any collection
+
+scala> a.foreach(println)
+4
+1
+2
+3
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+
+in foreach we can implement the anonymous function
+
+SEQ -> IndexedSeq, LinearSeq
+
+IndexedSeq
+
+* To fetch element in best manner
+Ex:Array, Vector
+
+
+LinearSeq
+
+Ex: List, LinkedList
+
+
+case class : it is a class wch implements Seriliazable and has companion object
+
+case class Order 
+{
+  var orderId: Int,
+  var orderDate: String,
+  var orderCustomerId: Int,
+  var orderStatus: String,
+}
+
+case class OrderItem
+(
+  var orderItemId: Int,
+  var orderItemOrderId: Int,
+  var orderItemProductId: Int,
+  var orderItemQuantity: Int,
+  var orderItemSubtotal: Float,
+  var orderItemProductPrice: Float
+)

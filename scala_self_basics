@@ -1,0 +1,390 @@
+SCALA Self
+----------
+
+Staically typed
+It identifies the operator on its own
+Scala is compiled language and interpreted
+
+SBT
+----
+Scala build tool- Open Source
+Native support for compiling scala code
+Update on request model 
+REPL Functionality - Read Eval Print Loop -> Takes in single input evaluates them and give the result
+
+Installation
+Java
+SBT 
+
+Data Type
+----------
+
+sbt console - To start the scala repl
+
+var - mutable : Value can be changed later
+- var a: Int = 15 
+val - immutable : Value cannot be used
+- val b : Int = 50
+- var c = true
+- var d = 90
+- var e = 12.5f
+- val x = {val a = 200; val b = 300;a+b}
+
+List 
+lazy val x = 500 // Memory will be intialized only if we use this variable
+
+scala object file
+------------------ 
+object -> class which already has the instance so new keyword cannot be called 
+It is like the singleton type, the class with only one named instance 
+
+
+
+object HelloWorld {
+   def main(args: Array[String]) {
+    println("Hello, world!")
+  }
+}
+
+To use the scala interpreter REPL 
+IDE ->Program -> Scala -> Create Scala Interpreter in the scala sample
+
+HelloWorld.main(Array(""))
+
+String Interpolation
+---------------------
+println(name + " is "+ age +" yr old")
+println(s"$name is $age yr old")
+//Type safe
+println(f"$name%s is $age%d yr old")
+
+println(s"Hello \nworld")
+println(raw"Hello \nworld")
+
+If Else
+-------
+val x = 20;
+var res2 = if (x == 20) "x == 20" else "x != 20"
+println(res2)
+
+For Loop
+---------
+For loop as a statement
+<- // this is used as the generator pointing towards the variable
+
+for(var i <- Range){  }
+eg  for(i <- 1 to 5){
+      println("i using to "+i)
+    }
+    for(i <- 1 until 6){
+      println("i using to "+i)
+    }
+	
+val lst = List(11,21,31,14,15,45);
+for(i <- lst; if i < 25){
+	println("i using lst filter "+i)
+}
+
+for loop as an expression
+
+Match
+------
+    val age = 18;
+    
+    age match {
+      case 20 => println(age);
+      case 18 => println(age);
+      case 30 => println(age);
+      case 40 => println(age);
+      
+	  case _ => println("default") // undescore acts as a default
+    }
+	
+Function
+--------
+
+def add(x: <arg type>, y: Int) : <return type> = {
+  return x+y;
+}
+
+eg:
+
+  def add(x: Int, y: Int) : Int = {
+  return x+y;
+}
+
+Return can be avoided and lst line is considered as the return statement
+  
+def multiply(x: Int, y: Int) : Int = x * y;
+
+If we are sure of the return type we can avoid that also 
+  
+def divide(x: Int, y: Int) = x / y;
+
+For the single argument use the function like this 
+println(Maths square 4);
+similar to  for( a -> 1 to 5)
+
+If the function doesnot return anything then make it as Unit equivalent to void in java
+def print(x: Int, y: Int): Unit = {}
+
+function are first class citizen - We can assign the function to a variable  using the anonymous funct 
+
+Anonymous Fucntion
+------------------
+var add = (x: Int, y: Int) => x+y ;
+
+//Here add is the variable 	  
+println(add(300, 500))
+
+Higher Order Function
+----------------------
+Functions as argument and able to return functions as a result
+
+def math(x: Double, y: Double, 
+		f<funct to be passed>: (Double, Double)=><return type of func called>)
+		:<return data type of math funct> 
+		= f(x,y)<call the funct passed and give the arguments>;
+
+Eg:
+def math(x: Double, y: Double, f: (Double, Double)=>Double):Double = f(x,y);
+
+def main(args: Array[String]): Unit = {
+  val result = math(50, 20, (x,y)=>x+y)
+  println(result)
+}
+
+//    var result_new = math2(50, 30, 20, (x,y) => x+y)
+// _ is the wild card means something with something
+    var result_new = math2(50, 30, 20, _+_)
+    println("New result "+result_new)
+
+Partially Applied Function
+--------------------------
+If we donot applu all the argument in the function 
+
+val sum = (a: Int, b: Int, c: Int) => a + b + c
+// We are only passing first two argument the third one will be passed later on as a wild card    
+val f = sum(10, 20, _: Int)
+
+println(f(30))
+
+Closures
+---------
+A function which uses one or more varaible that are declared outside the function
+
+Closures takes the last value(most) state of the variable declared outside of the closure
+Impure closures - whenever the value of the closure variable is var it can be edited from within and outside the function
+Pure Closures - If we use val to define the variable of the closure then the value of the closure will remain the same 
+
+Currying Function
+------------------
+Process of transformation of a function that takes multiple arg to the function that takes single argument
+
+List
+-----
+List - Immutable : Cannot change once created
+Array - Mutable
+
+println(0 :: mylist)
+
+:: -> Cons it is used to prepend before the list
+// Cons anything with Nil becomes the list
+println(3 :: 5  :: 7 :: 9 :: Nil)
+// Tail is whatever remaining after removing the first value
+println(names.tail)
+
+// To iterate over the list
+ mylist.foreach(print)
+
+// Another way of printing
+for(name <- names){
+      println(name);
+    }
+
+Set
+----
+Collection of different element of the same data type
+By default Immutable
+val myset: Set[Int] = Set(1,1,2,3,4,4,5,6,6,7)
+
+To make it mutable 
+scala.collection.mutable.Set(1,1,2,3,4,4,5,6,6,7)
+
+Not ordered so you cannot index it 
+// checks if the element is present in the set
+println(myset(8))
+// Concat
+println(myset1 ++ myset2)
+// Intersection of two sets
+println(myset1.&(myset2))
+//Iterate over 
+myset2.foreach(println)
+
+Maps
+-----
+val mymap : Map[Int, String] = 
+    Map(801 -> "Max",802 -> "Tom",804 -> "Shubh");
+println(mymap)
+// To get the value asociated with the key
+println(mymap(802))
+
+If we duplicate the key in the map it picks up the latest one by overriding it
+
+//Keys are the set
+println(mymap.keys)
+println(mymap.values)
+
+// To iterate in the map
+mymap.keys.foreach { key =>
+  println("key "+key);
+  println("Value "+mymap(key))
+}
+
+//Whether value is present or not
+println(mymap.contains(801));
+
+//Concatinate two map
+println(mymap ++ mymap2)
+
+Tuples
+-------
+Contains the heterogenous data types
+Immutable cannot be changed once declared
+val mytuple = (1,2,"hello",true) 
+val mytuple2 = new Tuple4(1,2,"hello",true) 
+
+println(mytuple)
+//Print the third element
+println(mytuple._3)
+
+//Iterate
+   mytuple.productIterator.foreach{
+     i => println(i);
+   }
+
+Options
+--------
+// It gives instance of some or none
+val lst = List(1,2,3)
+val map = Map(1 -> "Tom", 2-> "Max", 3-> "John")
+
+println(lst.find( _ > 6))
+// This gives value inside the some
+println(lst.find( _ > 2).get)
+// To avoid exception if not present
+println(map.get(5).getOrElse("No name found"))
+
+Map And Filter
+---------------
+val lst = List(1,2,3,4,5,6);
+val mymap = Map(1 -> "Tom", 2-> "Max", 3-> "John")
+
+ // It will double the element in the list
+ println(lst.map( _ * 2))
+ println(lst.map( x => x*2))
+ println(lst.map( x => "hi"+x))
+ 
+ println(mymap.map( x => "hi"+x))
+ // To apply map on the values only
+ println(mymap.mapValues( x => "hi"+x))
+
+if we have list of list and we want to join them we use the flatten
+println(List(List(1,2,3),List(4,5,6)).flatten);
+
+FlatMap
+-------
+
+println(lst.map(x => List(x, x+1)))
+println(lst.flatMap(x => List(x, x+1)))
+	
+O/P
+List(List(1, 2), List(2, 3), List(3, 4), List(4, 5), List(5, 6), List(6, 7))
+List(1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7)
+
+Filter
+------
+Filter is given predicate as the argument of the filter which return the boolean values
+You give method as the argumnet to the filter wch returns the boolean value
+
+//Reduce left does in the left direction
+println(lst2.reduceLeft(_+_))
+println(lst.reduceLeft(_+_))
+//Alternate way of writing it
+println(lst.reduceLeft((x,y) => {println(x+", "+y); x+y}));
+
+//We pass the first starting parameter
+println(lst.foldLeft(100)(_+_))
+
+//It gives the map of character
+println(lst.scanLeft(100)(_+_))
+println(lst2.scanLeft("C")(_+_))
+
+Classes
+-------
+Class with constructor
+In Constructor it is var so we can overwrite it
+
+//Primary Constructor 
+class User(var name:String, var age: Int)
+
+// var    getter setter
+// val    getter
+// default ---   ---
+
+Auxilary Constructor
+--------------------
+alternate constructor like the default constructor with no arg is required 
+differnt signatures for the auxillary constructors
+in auxillary constructor we call the previously defined constructor
+
+class User(var name: String, var age: Int){
+  def this(){
+    this("Tom",32)
+  }
+  
+  def this(name: String){
+    this(name,32)
+  }
+}
+
+Inheritance
+------------
+For overriding in child class
+
+class Rectangle(var width: Double, var height: Double) extends Polygon{
+  
+  override def area : Double = width * height;
+  
+}
+
+Abstract
+--------
+If we dont want to call the super class to be called and we want the area method to be implemented anyhow
+
+Lazy Evaluations
+----------------
+strict evaluation but lazy one can done once defined 
+
+lazy val l = 9
+
+Trait
+-----
+Multiple inheritance not allowed for more than one class
+Multiple inheritance leads to diamond problem 
+Partially implemented interfaces
+Can have abstract and non abstract method atleast one method shld be abstract
+In scala we can inherit from one class wch cld be abstract or non abstract and multiple trait
+
+override not required when you use the trait 
+
+
+
+
+
+
+  
+}
+
+
+--------------------

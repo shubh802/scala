@@ -1,0 +1,174 @@
+SCALA
+
+Statically type language 
+
+Go inside the package src\main\scala
+and type sbt package
+
+For getting jar file
+From cmd goto the folder of project
+-sbt
+-package
+
+-run // to run the project with main file
+
+* sbt always choose sbt less than 1  - 0.13.16 while creating the project from intellij
+
+www.scalafiddle.io - to run scala programs online
+
+REPL- Read Evaluate Print Loop also called as command line interface ex
+// It takes the command respond and tries to compile the commands and prints the output and then agains it ask us for entering command again
+SQLPlus
+Python
+
+in scala
+:help
+
+:help javap  // To see the metadat of the complied bytecode
+:help history // to get the history of the commands
+:save <path>\saving.sc \\TO save the commands of the current file session
+:imports // To get the imports details
+
+Scala Variable
+* No data types
+val // variable is immutable like final,static
+var // variable is mutable
+
+-var i= 0 // Initialization of variable is must
+:paste // the compilation of entire code will take place only after we use the Ctrl+D
+
+-val b: Long = 42L
+-val c: Float= 56.0f
+
+val i =(math.random * 100).toInt
+val j =(math.random * 100).toInt
+
+if(i>j){
+println(i)
+}
+else if(i==j){
+println("equal")
+}
+else
+println(j)
+
+if(i>j) i else j // ternary operator ? :
+
+WHILE LOOP
+
+var ctr = 56
+while(ctr >= 1){
+println(ctr)
+ctr -=1
+}
+
+FOR LOOP
+
+// Incrementing from i to j adding 2 in them i= 4 j=70
+for(e <- i to j by 2){
+println(e)
+}
+
+// Decrementing by 3
+for( e <- j to i by -3){
+println(e)
+}
+
+* We will use API instead of loop
+
+//Factorial
+var a= 5
+var res=1
+for( e <- a to 2 by -1){
+res = e * res}
+println("Factorial of a "+a+" is "+ res)
+
+FUNCTIONS
+// return type :Int
+def fact(i : Int):Int = {
+	var res = 1
+	for(e<- i to 1 by -1)
+		res *=e
+	res
+}
+
+//recursive function return type mandatory
+// single line no need of {}
+def factr(i :Int):Int = if(i==1) 1 else i * factr(i-1)
+
+
+
+
+* In scala function can be a parameter and return the value, like a callback function of javascript
+* It can accept arguments as a parameter and the functions
+
+// to print rande of sum via recursive
+def sum(a:Int, b:Int):Int ={
+ if(a>b)0 else a+ sum(a+1, b)
+}
+
+def sumOfSquare(a:Int, b:Int):Int ={
+ if (a>b) 0 else (a*a)+sumOfSquare(a+1,b)
+}
+
+ // it takes first parameter as function and returns the value last two are the int arguments
+def sum(f: Int => Int, a: Int, b: Int):Int ={
+	if(a > b) 0 else f(a) + sum(f, a+1, b)
+} 
+
+def sum(f: (Int, Int) => Int, a: Int, b: Int):Int // It takes first parameter as func with with aruguments in it which returns an int
+
+def id(i: Int) = i  // it will return i
+
+def sqr(i: Int) = math.pow(i, 2).toInt  // it will return square
+ 
+def cube(i: Int) = i * i * i  // it will return cube
+
+sum(id, 1, 10)
+
+ANONYMOUS FUNCTIONS
+
+(i: Int) => i
+
+(i: Int) => i * i
+
+(i: Int) => i * i * i
+
+var id = (i: Int) => i
+
+var s = (i: Int) => i * i
+
+var c = (i: Int) => i * i * i
+
+sum(c, 1, 5)
+
+sum((i: Int) => i, 1, 10) // anonymous fun is passed as the parameter
+
+
+val a=5
+import scala.language.postfixOps
+a.toString	// This is ideal case and . is optional 
+a toString // to change a to string
+res3: String = 5
+
+scala> a.+(b)
+res4: Int = 8
+
+scala> a+b
+res5: Int = 8
+
+a.==  // press tab it will get the func == is also a funct it checks the value and then returns true
+
+== // internally calls equals so just change the equals method if we want to override
+
+a.eq // to compare the obj refrences like == in java
+
+a != b
+a.!=(b)  // These both are same
+
+
+
+
+
+
+

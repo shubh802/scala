@@ -1,0 +1,188 @@
+Basics2
+
+Immutable : not able to edit it
+
+Functions are first class citizen in FP language - we can define the function and pass another function as an argument
+
+Scala is compiled language 
+
+REPL - Read Evaluate Print Loop
+
+:quit // to exit
+
+immutable variable : val
+mutable variable : var
+
+Scala is statically typed and dynamically infered
+means that once you defined the data type you cannot change the type of it throughout the scope
+
+
+Block expression
+
+The value of expression will be the last part
+var add ={var a=10; var b=20; a+b}
+
+:paste // to write the line of code
+
+Ctrl+D to run it
+
+lazy val x = {println("foo");10}
+println("bar")
+println(x)
+
+o/p
+bar
+foo
+10
+
+lazy - Variable can be lazy, then the initialization of that variable is deferred untill it is accessed 
+
+singleton object 
+
+It is alternate of static class 
+Immutable
+
+// After ; it acts as the nested for loop
+ for(i <- 1 to 3; j <- 1 to 3)
+        println(i,j)
+
+=> rocket symbol for showing the o/p on other side
+
+t(a:String): => Long // t is taking String as an argument
+
+def exec(t: => Long) : Long ={}  // the funct will take the input parameter as the function
+
+Anonymous functions
+
+the function just used only once 
+
+Higher Order Fucntions
+
+A HOF is any function ech can accept the input as another function
+
+def sum
+
+Procedure
+
+Function that donot return any value
+
+
+Collections
+
+Array
+------
+
+val no = Array(1,2,3,4)
+val animal = Array("Pig","Monkey",100)
+
+Arrays are immutable in scala, we cannot change the length in array just change the existing value in the no or type of that value
+
+Array are used to hold the large elements
+
+ animal.tail // just remove the head n give us rest of the array in the new array
+ animal.last //gives us the last value
+
+For mutable array
+
+scala> import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ArrayBuffer
+
+scala> var cars = new ArrayBuffer[String]()
+cars: scala.collection.mutable.ArrayBuffer[String] = ArrayBuffer()
+
+//Last element will be removed
+
+scala> cars.length
+res11: Int = 3
+
+scala> cars.trimEnd(1)
+
+scala> cars.insert(2,"Bently")
+
+//TO remove the element
+scala> cars
+res15: scala.collection.mutable.ArrayBuffer[String] = ArrayBuffer(BMW, Jaguar, Bently)
+
+scala> cars.remove(0)
+res16: String = BMW
+
+Map
+----
+
+scala> var mapping = Map("NY" -> "New York", "NJ" -> "New Jersey")
+mapping: scala.collection.immutable.Map[String,String] = Map(NY -> New York, NJ -> New Jersey)
+
+scala> mapping("NY")= "Auckland"
+<console>:14: error: value update is not a member of scala.collection.immutable.Map[String,String]
+       mapping("NY")= "Auckland"
+
+scala> mapping("NY")
+res20: String = New York
+	   
+// To remove the exceptions
+
+scala> mapping.getOrElse("BLR","The value does not exists")
+res21: String = The value does not exists
+
+scala> var states = scala.collection.mutable.Map[String,String]()
+states: scala.collection.mutable.Map[String,String] = Map()
+
+scala> states += ("CA" ->"California","NJ" -> "New Jersey")
+res23: scala.collection.mutable.Map[String,String] = Map(NJ -> New Jersey, CA -> California)
+
+Tuple
+------
+
+disimilar elements
+
+scala> var tuplex = (101,"Robert",2500.00)
+tuplex: (Int, String, Double) = (101,Robert,2500.0)
+
+scala> tuple
+tuple2ToZippedOps   tuple3ToZippedOps   tuplex
+
+// _ gives the element value
+
+scala> tuplex._1
+res25: Int = 101
+
+List
+-----
+
+List are immutable
+
+scala> var num = List(1,2,3,4)
+num: List[Int] = List(1, 2, 3, 4)
+
+scala> var num(0) = 100
+<console>:13: error: not found: value num
+       var num(0) = 100
+           ^
+
+scala> num.sum
+res26: Int = 10
+
+scala> num.take(2)
+res27: List[Int] = List(1, 2)
+
+scala> num.size
+res28: Int = 4
+
+scala> num.reverse
+res29: List[Int] = List(4, 3, 2, 1)
+
+scala> num.max
+res30: Int = 4
+
+
+scala> val a = List(1,2,3,4)
+a: List[Int] = List(1, 2, 3, 4)
+
+scala> val b = a.map(x => x * x)
+b: List[Int] = List(1, 4, 9, 16)
+ 
+ // x => x*x works as the anonymous functions
+     
+
+scala> b
+res32: List[Int] = List(1, 4, 9, 16)

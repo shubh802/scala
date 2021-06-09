@@ -1,0 +1,287 @@
+OOP
+
+Object
+
+* scala doesnot support the static keyword so for static func so have to create your class of type object then all the method will be static
+
+* main funct has to be part of object 
+
+* Unit is similar to void
+object comb {  // cannot pass arguments to object
+def main(args: Array[String]): Unit = {
+    
+  }  
+  
+* = is required only if we have to define the return type else not required
+
+* As long as we dont have return during the end the main function doesnot return anything
+
+// To run from sbt
+In cmd open the path of the proj where you can see build.sbt and src
+* run 
+- sbt console// which launches scala with repl and all the dependencies will be loaded in this session
+- comb.main(Array(""))
+- :quit
+- sbt run // if it has just one parameter and nothing more
+- sbt console
+- scala> :javap -p comb$  // it tells the metadata o fthe bytecode where comb$ is just the singleton class file like .class in java
+Compiled from "comb.scala"
+public final class comb$ {
+  public static comb$ MODULE$;
+  public static {};
+  public void main(java.lang.String[]);
+  private comb$();
+}
+
+Ex:
+object combination {
+
+  def nCr(n: Int, r: Int) = {
+    def fact(i: Int) = {
+      var res =1
+      for (e <- i to 1 by -1)
+        res = res * e
+      res
+    }
+
+    fact(n)/(fact((n-r)) * fact(r))
+  }
+  def main(args: Array[String]): Unit = {
+    val n = args(0).toInt
+    val r = args(1).toInt
+    val c = nCr(n, r)
+    println("The value of combination is " +c)
+  }
+}
+
+// To run it from sbt 
+- :quit
+- sbt run-main "combination 6 2"  // nt working
+- sbt "run 6 2" // when only one object in main funct
+
+CLASSES
+
+scala> class Department(departmentId: Int, departmentName: String) // it creates a by default constructor with arguments
+defined class Department
+
+scala> :javap -p Department
+Compiled from "<console>"
+public class $line16.$read$$iw$$iw$Department {
+  public $line16.$read$$iw$$iw$Department(int, java.lang.String);
+}
+
+scala> class Department(val departmentId: Int,val departmentName: String)
+defined class Department // These are immutable class variables
+
+scala> :javap -p Department
+
+public class $line17.$read$$iw$$iw$Department {
+  private final int departmentId; // immutable so final variable
+  private final java.lang.String departmentName;
+  public int departmentId(); // since they are immutable so just the getter method
+  public java.lang.String departmentName();
+  public $line17.$read$$iw$$iw$Department(int, java.lang.String);
+}
+
+scala> class Department(var departmentId: Int,var departmentName: String)
+defined class Department // mutable class variable with getter and setters
+
+scala> :javap -p Department
+
+public class $line18.$read$$iw$$iw$Department {
+  private int departmentId;
+  private java.lang.String departmentName;
+  public int departmentId();
+  public void departmentId_$eq(int); // setter method for id
+  public java.lang.String departmentName();
+  public void departmentName_$eq(java.lang.String);
+  public $line18.$read$$iw$$iw$Department(int, java.lang.String);
+}
+
+scala> val d = new Department(1, "Shop")
+d: Department = Department@4b27a3fc
+
+scala> d.departmentId
+   var departmentId: Int
+
+scala> d.departmentName
+
+
+class Department(var departmentId: Int,var departmentName: String){
+   println("The department id is "+departmentId+" the department name is "+departmentName)
+}
+
+// Exiting paste mode, now interpreting.
+
+defined class Department
+
+scala> val d = new Department(1, "Shop")
+The department id is 1 the department name is Shop
+
+class Department(var departmentId: Int,var departmentName: String){
+	println("The department id is "+departmentId+" the department name is "+departmentName)
+	override def toString = "Department("+departmentId+ ","+ departmentName+")" // to string always has string as return type so donot need a return type
+}
+
+scala> val d = new Department(1, "Meat Shop")
+The department id is 1 the department name is Meat Shop
+d: Department = Department(1,Meat Shop)
+
+
+class OrderItem(orderItemId: Int, orderItemOrderId: Int, orderItemProductId: Int, orderItemQuantity: Int, orderItemSubtotal: Float, orderItemProductPrice: Float)
+
+class OrderItem(var orderItemId: Int, var orderItemOrderId: Int, var orderItemProductId: Int, var orderItemQuantity: Int, var orderItemSubtotal: Float, var orderItemProductPrice: Float)
+
+// require is used as a check if not true will return the exception "invalid order subtotal"
+  require(orderItemSubtotal == orderItemQuantity * orderItemProductPrice,
+    "Invalid order subtotal")  
+// for having additional constructor but it should call the main constructor in first line 
+ def this(orderItemId: Int,
+    orderItemOrderId: Int,
+    orderItemProductId: Int,
+    orderItemQuantity: Int,
+    orderItemProductPrice: Float
+    ) = {
+      this(orderItemId, orderItemOrderId, orderItemOrderId, orderItemQuantity * orderItemProductPrice,
+        orderItemQuantity,orderItemProductPrice)
+  }
+
+
+ COMPANION OBJ AND CASE CLASSES
+
+* If the class name is similar to that of the object name then the object is termed as companion obj to the class
+
+* The companion obj differs from the other obj as it has access rights to the class tht other obj donot have
+ 
+
+class A(private val message: String)
+object A {    // as obj works as static funct/companion obj lyk in java it has access to all the private class variable
+ val a = new A("hello World")
+ println(a.message)
+}
+
+defined class A
+defined object A
+
+scala> A
+hello World
+ 
+//To see the  metadata of the companion object 
+// We need $ as it is in the end of each of the compiled code for object
+scala> :javap -p A$
+public class $line48.$read$$iw$$iw$A$ {
+  public static $line48.$read$$iw$$iw$A$ MODULE$;
+  private final $line48.$read$$iw$$iw$A a;
+  public static {};
+  public $line48.$read$$iw$$iw$A a();
+  public $line48.$read$$iw$$iw$A$();
+}
+
+CASE CLASS
+
+* A case class has companion obj assoiciated with it
+* It implements Seriazable n Product
+* Each of the variable is val (immutable) in case class even if we dont specify them
+* Companion obj in it has apply and unapply funct
+ 
+ Ex:
+case class OrderItem
+(
+  var orderItemId: Int,
+  var orderItemOrderId: Int,
+  var orderItemProductId: Int,
+  var orderItemQuantity: Int,
+  var orderItemSubtotal: Float,
+  var orderItemProductPrice: Float
+)
+
+// toString method is already overriden we dont have to implement it seperately
+scala> val oi= OrderItem(1, 1, 1, 3, 150, 50)
+oi: OrderItem = OrderItem(1,1,1,3,150.0,50.0)
+
+scala> :javap -p OrderItem$
+
+public class $line51.$read$$iw$$iw$OrderItem$ extends scala.runtime.AbstractFunction6<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, $line51.$read$$iw$$iw$OrderItem> implements scala.Serializable {
+  public static $line51.$read$$iw$$iw$OrderItem$ MODULE$;
+  public static {};
+  public final java.lang.String toString();
+  public $line51.$read$$iw$$iw$OrderItem apply(int, int, int, int, float, float)
+;
+  public scala.Option<scala.Tuple6<java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object>> unapply($line51.$read$$iw$$iw$OrderItem);
+  private java.lang.Object readResolve();
+  public java.lang.Object apply(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object);
+  public $line51.$read$$iw$$iw$OrderItem$();
+}
+
+//apply
+* It is a spl fuct which you dont have to call explicity to invoke it
+
+class A(val i: Int)
+object A {
+  def apply(i: Int)=  {
+  new A(i)
+ }
+}
+
+// Exiting paste mode, now interpreting.
+
+defined class A
+defined object A
+
+scala> val a = A(10)
+a: A = A@54806247
+
+scala> val a = A.apply(10)
+a: A = A@1952d5d1
+
+scala> a.i
+res10: Int = 10
+
+scala> val a = A(10)
+a: A = A@4be7f34b
+
+scala> a.i
+res11: Int = 10
+
+ oi.productArity
+ Int = 6
+ 
+oi.productIterator.foreach(println)
+1
+1
+1
+3
+150.0
+50.0
+
+Overriding Operators
+---------------------
+
+* for overriding toString function we dont have to specify the return type as the funct itself is returning values
+
+Adding Dependencies
+--------------------
+
+in build.sbt add
+
+libraryDependencies += "com.typesafe" % "config" % "1.3.1"
+libraryDependencies += "mysql" % "mysql-connector-java" % "5.1.36"
+
+libraryDependencies is a mutable collection type
+
+* To test it you can create a Scala worksheet and import the dependency and run it in REPL mode
+
+* _ "underscore" is an alternate of * in java while importing packages
+
+Ex:
+
+import  com.typesafe.config._
+
+ConfigFactory
+
+ 
+
+
+
+
+  
